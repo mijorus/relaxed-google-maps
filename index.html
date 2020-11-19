@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/mvp.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/icomoon/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/styles/atom-one-dark.min.css">
+    <title>Relaxed Google Maps</title>
+</head>
+<body>
+    <header>
+        <h1>Relaxed Google Maps</h1>
+        <h2>Lazy load Google Maps iframe. Without jQuery.<br>
+            And with placeholders!
+        </h2>
+    </header>
+
+    <section>
+        <img src="/svg/google-maps.svg" width="150px" alt="google maps icon">
+    </section>
+
+    <section id="message">
+            <p class="text-center">Relaxed Goole Maps will lazy load Gmap on any static website, without jquery or
+                your beloved Wordpress plugins.
+                <br>
+                It is design to copy and paste iframes from Goole maps directly.
+                <br><br>
+                Also, you can easily set a map placeholder with a picture, until the user
+                accepts the cookie policy.
+            </p>
+    </section>
+
+    <section>
+        <pre><code class="javascript code">
+//Just paste your iframe src here
+const location =
+'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158858.182370726!2d-
+0.10159865000000001!3d51.
+52864165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!
+1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2s
+Londra%2C%20Regno%20Unito!5e0!3m2!1sit!2sit!4v1605344840356
+!5m2!1sit!2sit'
+
+relaxedMap({
+    target: 'gmap',
+    src: location,
+    defaultMapStyle: false
+}, true)
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Configuration</h2>
+    </section>
+    <section>
+        <pre><code class="javascript code">
+//Create an empty html element with an id
+&lt;div id=&quot;gmap&quot;&gt;&lt;/div&gt;
+<br>
+relaxedMap({
+    target: 'gmap', // id of the target element
+
+    src: string, // source attribute of the iframe, can be inline with 'data-src'
+
+    alt: string, /* can be inline with 'data-alt', 
+                    will be used intead of the iframe 
+                    when the user has not accepted the cookie polity yet */
+
+    defaultMapStyle: false, // use google's default inline-style. Default: false
+
+    placeholder: {
+        text: undefined, // text of the placeholder. Default: 'Open in Google Maps'
+
+        subtitle: undefined, /* info text; will be placed below the iframe
+                                Default: 'Please, accept the cookie policy to use the map' */
+
+        backgroundImage: undefined, // url of the placeholder image
+
+        backgroundColor: undefined, /* solid color to show if the image is not set. 
+                                    Default <span style="background-color: #e9ecef !important; padding: 3px; border-radius: 5px;">#e9ecef</span> */
+        blurred: 3, /* value of the blur filter of the placeholder image. 
+                    Default 3px. Set 0 to remove. */
+
+        grayscale: true /* apply a grayscale filter to the placeholder image.
+                        Default: true */
+    }
+})
+        </code></pre>
+    </section>
+
+    <section>
+        <h3>Some helper classes will also be created for you</h3>
+    </section>
+    
+    <section>
+        <pre><code class="css code">
+/* will be applied to every relaxed map */
+.relaxed-map
+
+/* container of the iframe; its border can be styled */
+.relaxed-map-container
+
+/* will be applied to the alternative link on top of the map */
+.relaxed-map-alt
+
+/* will be applied to the subtitle */
+.relaxed-map-subtitle
+        </code></pre>
+    </section>
+
+    <section>
+        <h3>Scroll all the way to the bottom to se some examples...</h3>
+    </section>
+    
+    <section>
+        <h2 class="bounce"><i class="icon-arrow-down-thick"></i></h2>
+    </section>
+
+    <section class="on-bottom text-center">
+        <div>
+            <strong>This map is now loading...</strong> 
+            <br>
+            Each relaxed map will also dispatch a <code class="javascript">relaxedMapLoad</code> event
+        </div>
+    </section>
+
+    <section>
+        <pre><code class="javascript code">
+document.getElementById('gmap')
+    .addEventListener('relaxedMapLoad', () => {
+    console.log('Map Loaded')
+}
+        </code></pre>
+    </section>
+
+    <section>
+        <div id="gmap"></div>
+    </section>
+
+    <section id="message">
+        <h3>Keep going...</h3>
+    </section>
+    
+    <section>
+        <h2 class="bounce"><i class="icon-arrow-down-thick"></i></h2>
+    </section>
+
+    <section class="on-bottom">
+        <pre><code class="js code">
+const mapConfig = {
+    target: 'gmapp',
+    src: location,
+    alt: alternativeLink,
+    placeholder: {
+        subtitle: 'Come on dude, accept the cookies',
+        backgroundImage: 'img/london.jpg',
+    }
+}
+
+// function to be executed on button click
+const cookieConsent = function (event) {
+    event.target.removeEventListener('click', cookieConsent)
+    relaxedMap(mapConfig, true)
+}
+
+// this data is actually saved in session storage for the purpuse of this demo
+if (localStorage.getItem('cookie') === 'true') {
+    // the user has alredy accepted the policy
+    relaxedMap(mapConfig, true)
+    } else if (localStorage.getItem('cookie') === 'false') {
+    // the user still has to accept the policy
+    relaxedMap(mapConfig, false)
+    document.getElementById('gmapp-cookie-accept')
+    .addEventListener('click', cookieConsent)
+}
+        </code></pre>
+    </section>
+
+    <section>
+        <div>
+            <section>Accept the cookie policy?</section>
+            <div><button id="gmapp-cookie-accept">Accept</button><button>Decline</button></div>
+        </div>
+        <div id="gmapp"></div>
+    </section>
+
+    <section id="message">
+        <h3>More examples below</h3>
+    </section>
+
+    <section>
+        <h2 class="bounce"><i class="icon-arrow-down-thick"></i></h2>
+    </section>
+
+    <section class="on-bottom">
+        <h3>The style can also be inline</h3>
+    </section>
+
+    <section>
+        <pre><code class="html code">
+<-- Super useful if the code is injected by the server or on static website generators  -->
+&lt;div id=&quot;gmappp&quot;
+    data-src=&quot;{{ $iframe_src }}&quot; <-- like that!!
+    data-alt=&quot;https://www.google.com/maps/place/London/@51.5286416,-0.1015987,11z/......&quot;&gt;
+&lt;/div&gt;
+        </code></pre>
+    </section>
+
+    <section>
+        <div>
+            <section>Accept the cookie policy?</section>
+            <div><button id="gmappp-cookie-accept">Accept</button><button>Decline</button></div>
+        </div>
+        <div id="gmappp" 
+        data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158858.182370726!2d-0.10159865000000001!3d51.52864165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondra%2C%20Regno%20Unito!5e0!3m2!1sit!2sit!4v1605344840356!5m2!1sit!2sit"
+        data-alt="https://www.google.com/maps/place/Londra,+Regno+Unito/@51.5286416,-0.1015987,11z/data=!3m1!4b1!4m5!3m4!1s0x47d8a00baf21de75:0x52963a5addd52a99!8m2!3d51.5073509!4d-0.1277583"
+        >
+        </div>
+    </section>
+
+    <section>
+        <h2>Enjoy!</h2>
+    </section>
+
+    <footer>
+        <div>
+            <a href="https://iconscout.com/icons/google-maps" target="_blank">Google maps Icon</a> by 
+            <a href="https://iconscout.com/contributors/icons8" target="_blank"> Icons8</a>
+        </div>
+        <div>
+            <a href="https://iconscout.com/icons/bedtime" target="_blank">Bedtime Icon</a> by <a
+                href="https://iconscout.com/contributors/iconscout" target="_blank">Iconscout Freebies</a>
+        </div>
+    </footer>
+
+    <div class="floating">
+        <div><span>Map 1:</span> <span id="map-1-status" class="offline">Offline</span></div>
+        <div><span>Map 2:</span> <span id="map-2-status" class="offline">Offline</span></div>
+        <div><span>Map 2:</span> <span id="map-3-status" class="offline">Offline</span></div>
+    </div>
+
+    <div class="floating-on-the-other-side">
+        <a href="https://www.github.com/mijorus">
+            <img src="/svg/github.svg" width="35px" alt="githu logo">
+        </a>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js"></script>
+    <!-- and it's easy to individually load additional languages -->
+    <script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/languages/javascript.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/lib/relaxedGMap.js" type="module"></script>
+    <script src="/js/script.js" type="module"></script>
+    <script src="/js/examples.js" type="module"></script>
+</body>
+</html>
