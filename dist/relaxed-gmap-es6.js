@@ -27,7 +27,7 @@ const relaxedMap = function (config = {
     src: '',
     alt: '',
     defaultMapStyle: false,
-    placeholder : {
+    placeholder: {
         text: undefined,
         subtitle: undefined,
         backgroundImage: undefined,
@@ -106,7 +106,7 @@ const relaxedMap = function (config = {
         } else {
             link.setAttribute('href', alt)
 
-            
+
             if (placeholder && placeholder.text) {
                 const placeholderText = checkData(placeholder.text, relaxedGMap, 'text')
                 link.innerText = placeholderText
@@ -143,7 +143,7 @@ const relaxedMap = function (config = {
 
         //Create the subtitle node
         const subtitle = document.createElement('div')
-        const subtitleAttr = {'style': 'text-align: center;', 'class': 'relaxed-map-subtitle'}
+        const subtitleAttr = { 'style': 'text-align: center;', 'class': 'relaxed-map-subtitle' }
         setAttributes(subtitleAttr, subtitle)
         if (placeholder && placeholder.subtitle) {
             subtitle.innerText = config.placeholder.subtitle
