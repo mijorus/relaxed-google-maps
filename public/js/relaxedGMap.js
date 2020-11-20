@@ -12,7 +12,6 @@ function setAttributes(attributes, el) {
 
 function inViewport(el) {
     const map = el.getBoundingClientRect();
-    console.log(map.top);
     
     if (map.top <= (window.innerHeight || document.documentElement.clientHeight)) {
         return true
