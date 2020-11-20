@@ -56,37 +56,49 @@ relaxedMap({
     </section>
     <section>
         <pre><code class="javascript code">
-//Create an empty html element with an id
+// Create an empty html element with an id
 &lt;div id=&quot;gmap&quot;&gt;&lt;/div&gt;
 <br>
-relaxedMap({
-    target: 'gmap', // id of the target element
+// RelaxedMap('string', {Object})
+var mymap = new RelaxedMap('gmap', // id of the target element,
+    {// the configuration object
 
-    src: string, // source attribute of the iframe, can be inline with 'data-src'
+        src: string, // source attribute of the iframe, can be inline with 'data-src'
 
-    alt: string, /* can be inline with 'data-alt', 
-                    will be used intead of the iframe 
-                    when the user has not accepted the cookie polity yet */
+        alt: string, /* can be inline with 'data-alt', 
+                        will be used intead of the iframe 
+                        when the user has not accepted the cookie polity yet */
 
-    defaultMapStyle: false, // use google's default inline-style. Default: false
+        defaultMapStyle: false, // use google's default inline-style. Default: false
 
-    placeholder: {
-        text: undefined, // text of the placeholder. Default: 'Open in Google Maps'
+        placeholder: {
+            text: undefined, // text of the placeholder. Default: 'Open in Google Maps'
 
-        subtitle: undefined, /* info text; will be placed below the iframe
-                                Default: 'Please, accept the cookie policy to use the map' */
+            subtitle: undefined, /* info text; will be placed below the iframe
+                                    Default: 'Please, accept the cookie policy to use the map' */
 
-        backgroundImage: undefined, // url of the placeholder image
+            backgroundImage: undefined, // url of the placeholder image
 
-        backgroundColor: undefined, /* solid color to show if the image is not set. 
-                                    Default <span style="background-color: #e9ecef !important; padding: 3px; border-radius: 5px;">#e9ecef</span> */
-        blurred: 3, /* value of the blur filter of the placeholder image. 
-                    Default 3px. Set 0 to remove. */
+            backgroundColor: undefined, /* solid color to show if the image is not set. 
+                                        Default <span style="background-color: #e9ecef !important; padding: 3px; border-radius: 5px;">#e9ecef</span> */
+            blurred: 3, /* value of the blur filter of the placeholder image. 
+                        Default 3px. Set 0 to remove. */
 
-        grayscale: true /* apply a grayscale filter to the placeholder image.
-                        Default: true */
+            grayscale: true /* apply a grayscale filter to the placeholder image.
+                            Default: true */
     }
 })
+
+// METHODS
+
+mymap.load() // will load the map
+
+mymap.unloaded() // will load the placeholder
+
+// Methods can be chained directly:
+new RelaxedMap('gmap', {
+    src: location
+}).load()
         </code></pre>
     </section>
 
@@ -150,7 +162,6 @@ document.getElementById('gmap')
     <section class="on-bottom">
         <pre><code class="js code">
 const mapConfig = {
-    target: 'gmapp',
     src: location,
     alt: alternativeLink,
     placeholder: {
@@ -159,19 +170,21 @@ const mapConfig = {
     }
 }
 
+const secondMap = new RelaxedMap('gmapp', mapConfig)
+
 // function to be executed on button click
 const cookieConsent = function (event) {
     event.target.removeEventListener('click', cookieConsent)
-    relaxedMap(mapConfig, true)
+    secondMap.load()
 }
 
 // this data is actually saved in session storage for the purpuse of this demo
 if (localStorage.getItem('cookie') === 'true') {
     // the user has alredy accepted the policy
-    relaxedMap(mapConfig, true)
+    secondMap.load()
     } else if (localStorage.getItem('cookie') === 'false') {
     // the user still has to accept the policy
-    relaxedMap(mapConfig, false)
+    secondMap.unloaded()
     document.getElementById('gmapp-cookie-accept')
     .addEventListener('click', cookieConsent)
 }
@@ -242,7 +255,7 @@ if (localStorage.getItem('cookie') === 'true') {
     </div>
 
     <div class="floating-on-the-other-side">
-        <a href="https://github.com/mijorus/relaxed-google-mapscle">
+        <a href="https://github.com/mijorus/relaxed-google-maps">
             <img src="./svg/github.svg" width="35px" alt="githu logo">
         </a>
     </div>

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function ()
     const alternativeLink = 'https://www.google.com/maps/place/Londra,+Regno+Unito/@51.5286416,-0.1015987,11z/data=!3m1!4b1!4m5!3m4!1s0x47d8a00baf21de75:0x52963a5addd52a99!8m2!3d51.5073509!4d-0.1277583'
 
     //First map
-    const firstMap = new RelaxedMap('gmap', {
+    new RelaxedMap('gmap', {
         src: location
     }).load()
 
