@@ -1,3 +1,7 @@
+a {
+    text-decoration: underline;
+}
+
 #message {
     margin-top: 30vh;
 }

@@ -20,6 +20,11 @@
         <h2>Lazy load Google Maps iframe. Without jQuery.<br>
             And with placeholders!
         </h2>
+        <h3>
+            <a href="https://raw.githubusercontent.com/mijorus/relaxed-google-maps/master/lib/relaxedGmap.min.js">Minified ES5</a>
+            -
+            <a href=https://raw.githubusercontent.com/mijorus/relaxed-google-maps/master/lib/relaxedGMap.js">ES6 Module</a>
+        </h3>
     </header>
 
     <section>
@@ -48,11 +53,11 @@ const location =
 Londra%2C%20Regno%20Unito!5e0!3m2!1sit!2sit!4v1605344840356
 !5m2!1sit!2sit'
 
-relaxedMap({
-    target: 'gmap',
+// Let's create a new relaxed map, just like that
+new relaxedMap('gmap', {
     src: location,
     defaultMapStyle: false
-}, true)
+})
         </code></pre>
     </section>
 
@@ -164,7 +169,11 @@ document.getElementById('gmap')
         <h2 class="bounce"><i class="icon-arrow-down-thick"></i></h2>
     </section>
 
-    <section class="on-bottom">
+    <section class="on-bottom text-center">
+        <h2>Real world example</h2>
+    </section>
+
+    <section >
         <pre><code class="js code">
 const mapConfig = {
     src: location,
